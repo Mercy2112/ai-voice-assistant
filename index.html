@@ -1,0 +1,26 @@
+<h2>📞 Trigger AI Assistant Call</h2>
+<form id="callForm">
+  <label for="targetNumber">Phone Number to Call:</label><br />
+  <input type="text" id="targetNumber" name="targetNumber" placeholder="+1234567890" required /><br /><br />
+  <button type="submit">Start AI Call</button>
+</form>
+
+<p id="result"></p>
+
+<script>
+  document.getElementById("callForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const number = document.getElementById("targetNumber").value;
+
+    const res = await fetch("/start-call", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ targetNumber: number })
+    });
+
+    const text = await res.text();
+    document.getElementById("result").textContent = text;
+  });
+</script>
